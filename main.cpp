@@ -15,6 +15,32 @@ using namespace std;
 //       // ... 
 //  }
 //  
+	
+void intersect(void)
+{
+  int data1[] = { 1, 2, 5, 6, 8, 9, 10 }; 
+  int data2[] = { 0, 2, 3, 4, 7, 8, 10 }; 
+  
+  vector<int> v1(data1, data1+sizeof(data1)/sizeof(data1[0]));
+  vector<int> v2(data2, data2+sizeof(data2)/sizeof(data2[0])); 
+  
+  vector<int> tmp(max(v1.size(), v2.size())); 
+  
+//   vector<int> res = vector<int> (tmp.begin(), ;
+  vector<int> res = vector<int> (tmp.begin(), set_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), tmp.begin()));
+  
+  cout << "Vector Result:" << endl;
+  for (vector<int>::const_iterator it=res.begin(); it != res.end(); it++)
+  {
+    cout << *it << " ";
+  }
+  cout << endl;
+  
+  int cnt = set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), tmp.begin()) - tmp.begin();
+  cout << "Num elements intersection="<< cnt;
+  
+}
+
 int main(int argc, char **argv) 
 {
   vector<int> v;
@@ -107,7 +133,7 @@ int main(int argc, char **argv)
     M.erase(M.find("SRM")); // or even M.erase("SRM") 
   }
   
-  cout << M["Mauro"];
+  cout << M["Mauro"] << endl;
   cout << "Map: " << endl;
   for (map<string, int>::const_iterator it=M.begin(); it != M.end(); it++)
   {
@@ -120,6 +146,26 @@ int main(int argc, char **argv)
  
   vector< pair<string, int> > V(M.begin(), M.end()); // remember all(c) stands for (c).begin(),(c).end() 
   cout << "Vector is:" << endl;
-  cout << V[0].first << "-" << V[0].second;
+  for (vector< pair<string,int> >::const_iterator it=V.begin(); it != V.end(); it++)
+  {
+    cout << it->first << "-" << it->second << endl;
+  }
+  
+  /**
+   * USE COPY ALGORITHM 
+   */
+  set< pair<string, int> > Set1;
+  std::copy(V.begin(), V.end(), inserter(Set1, Set1.end()));
+  cout << "Set1 =" << endl;
+  for (set< pair<string, int> >::const_iterator it=Set1.begin(); it != Set1.end(); it++)
+  {
+    cout << it->first << "-" << it->second << endl;
+  }
+
+  /**
+   * USE INTERSECT ALGORITHM
+   */
+  intersect();
+  
   return 0;
 }
